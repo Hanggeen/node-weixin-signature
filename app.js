@@ -51,8 +51,6 @@ function getTicket(accessToken, callback) {
 			type: 'jsapi'
 		}
   	}).then(function (response) {
-  		console.log('ticket:');
-  		console.log(response.data);
 		callback(response.data);
   	}).catch(function (error) {
 		callback(error);
@@ -63,7 +61,6 @@ function getTicket(accessToken, callback) {
 // 获取签名
 function getHash (jsapi_ticket, noncestr, timestamp, url) {
 	let str = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
-	console.log(hasha(str, {algorithm: 'sha1'}));
 	return hasha(str, {algorithm: 'sha1'});
 }
 
@@ -77,7 +74,7 @@ app.get('/', function (req, res, next) {
 		})
 	} else {
 		SIGNATURE.timestamp = currentMoment();
-		getAccessToken(APPID, APPSECRET, function(data){
+		getAccessToken(config.appid, config.appsecret, function(data){
 			getTicket(data.access_token, function(data2){
 				let ticket = data2.ticket;
 				let signature = getHash(ticket, SIGNATURE.noncestr, SIGNATURE.timestamp, config.url);
