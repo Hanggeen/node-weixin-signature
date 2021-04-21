@@ -81,7 +81,7 @@ app.get('/', function (req, res, next) {
 				SIGNATURE.signature = signature;
 				res.json({
 					signature: signature,
-					noncestr: SIGNATURE.noncestr,
+					nonceStr: SIGNATURE.noncestr,
 					timestamp: SIGNATURE.timestamp
 				})
 			})
